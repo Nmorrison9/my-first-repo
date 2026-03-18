@@ -1,0 +1,12 @@
+def calculate_love_score(name1, name2):
+    combined_names = (name1 + name2).lower()
+    love_letters = "love"
+    true_letters = "true"
+    true_count = 0
+    love_count = 0
+    for letter in true_letters:
+        true_count += combined_names.count(letter)
+    for letter in love_letters:
+        love_count += combined_names.count(letter)
+    print(f"{true_count}{love_count}")
+calculate_love_score("Kayne West", "Kim Kardashin")
