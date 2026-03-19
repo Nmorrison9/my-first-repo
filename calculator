@@ -1,0 +1,43 @@
+import art
+
+def add(n1, n2):
+    return n1 + n2
+def subtract(n1, n2):
+    return n1 - n2
+def multiply(n1, n2):
+    return n1 * n2
+def divide(n1, n2):
+    return n1 / n2
+
+operations = {
+"+": add,
+"-" : subtract,
+"*" : multiply,
+"/" : divide,
+}
+def calculator():
+    print(art.logo)
+    n1 = float(input("What's the first number?"))
+
+    keep_going = True
+    while keep_going:
+        operation_input = input("+\n""-\n""*\n""/\n""Pick an operation:")
+        if operation_input not in operations:
+            print("Invalid input. Try again!")
+            continue
+
+        n2 = float(input("What is your next number?"))
+
+        answer = operations[operation_input](n1, n2)
+
+        print(f"{n1} {operation_input} {n2} = {answer}")
+
+        still_going = input("Type 'yes' to continue with this result, or 'no' to exit:").lower()
+        if still_going == 'yes':
+            n1 = answer
+        else:
+            keep_going = False
+            print("\n" * 100)
+            calculator()
+
+calculator()
