@@ -1,11 +1,6 @@
 import random
 import art
 
-#def guessing_game():
-
-
-
-
 random_number = list(range(1, 101))
 chosen_number = random.choice(random_number)
 
@@ -57,12 +52,6 @@ def hard_mode():
     if not win:
         print("You lost! Maybe next time!")
         print(f"The number was: {chosen_number}")
-
-
-
-
-
-
 
 continue_playing = True
 print(art.logo)
