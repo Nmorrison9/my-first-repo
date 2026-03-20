@@ -1,0 +1,97 @@
+import random
+import art
+
+#def guessing_game():
+
+
+
+
+random_number = list(range(1, 101))
+chosen_number = random.choice(random_number)
+
+def easy_mode():
+    attempts = 10
+    win = False
+    while attempts > 0:
+        print(f" You have {attempts} attempts remaining to guess the number.")
+        try:
+            user_guess = int(input("Make a guess:  "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
+        if user_guess < chosen_number:
+            attempts -= 1
+            print("Too low.")
+        elif user_guess > chosen_number:
+            attempts -= 1
+            print("Too high.")
+        else:
+            print("You got it! Congratulations!")
+            win = True
+            break
+    if not win:
+        print("You lost! Maybe next time!")
+        print(f"The number was: {chosen_number}")
+
+def hard_mode():
+
+    attempts = 5
+    win = False
+    while attempts > 0:
+        print(f" You have {attempts} attempts remaining to guess the number.")
+        try:
+            user_guess = int(input("Make a guess:  "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
+        if user_guess < chosen_number:
+            attempts -= 1
+            print("Too low.")
+        elif user_guess > chosen_number:
+            attempts -= 1
+            print("Too high.")
+        else:
+            print("You got it! Congratulations!")
+            win = True
+            break
+    if not win:
+        print("You lost! Maybe next time!")
+        print(f"The number was: {chosen_number}")
+
+
+
+
+
+
+
+continue_playing = True
+print(art.logo)
+print("Welcome to the Number Guessing Game!")
+print("I am thinking of a number inbetween 1 and 100")
+while continue_playing:
+    random_number = list(range(1, 101))
+    chosen_number = random.choice(random_number)
+    difficulty = input("Choose a difficulty. Type 'easy' or 'hard' ").lower().strip()
+    if difficulty == "easy":
+        easy_mode()
+        keep_playing = input("Would you like to play again? type 'yes' to play again or 'no' to quit ").lower().strip()
+        if keep_playing == "no":
+            continue_playing = False
+        else:
+            print("\n" * 100)
+            print(art.logo)
+            print("Welcome to the Number Guessing Game!")
+            print("I am thinking of a number inbetween 1 and 100")
+    elif difficulty == "hard":
+        hard_mode()
+        keep_playing = input("Would you like to play again? type 'yes' to play again or 'no' to quit ").lower().strip()
+        if keep_playing == "no":
+            continue_playing = False
+        else:
+            print("\n" * 100)
+            print(art.logo)
+            print("Welcome to the Number Guessing Game!")
+            print("I am thinking of a number inbetween 1 and 100")
+    else:
+        print("Invalid input. Try again")
+print("\n \nGame over! Thank you for playing!")
