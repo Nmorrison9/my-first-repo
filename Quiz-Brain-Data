@@ -1,0 +1,137 @@
+class QuizBrain:
+    def __init__(self,  q_list):
+        self.question_number = 0
+        self.score = 0
+        self.question_list = q_list
+
+    def still_has_questions(self):
+        return self.question_number < len(self.question_list)
+
+
+    def next_question(self):
+        current_question = self.question_list[self.question_number]
+        self.question_number += 1
+        user_answer = input(f"Q.{self.question_number}: {current_question.text} (True or False?) ")
+        self.check_answer(user_answer, current_question.answer)
+        return current_question
+
+    def check_answer(self, user_answer, correct_answer):
+        if user_answer.lower() == correct_answer.lower():
+            print("Correct!")
+            self.score += 1
+        else:
+            print("Incorrect!")
+
+        print(f"The correct answer is {correct_answer}")
+        print(f"Your current score is:{self.score}/{self.question_number}")
+        print("\n")
+
+class Question:
+    def __init__(self, text, answer):
+        self.text = text
+        self.answer = answer
+
+question_data = [
+    {"question": "A slug's blood is green.", "correct_answer": "True"},
+    {"question": "The loudest animal is the African Elephant.", "correct_answer": "False"},
+    {"question": "Approximately one quarter of human bones are in the feet.", "correct_answer": "True"},
+    {"question": "The total surface area of a human lungs is the size of a football pitch.", "correct_answer": "True"},
+    {
+        "question": "In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.",
+        "correct_answer": "True"},
+    {"question": "In London, UK, if you happen to die in the House of Parliament, you are entitled to a state funeral.",
+     "correct_answer": "False"},
+    {"question": "It is illegal to pee in the Ocean in Portugal.", "correct_answer": "True"},
+    {"question": "You can lead a cow down stairs but not up stairs.", "correct_answer": "False"},
+    {"question": "Google was originally called 'Backrub'.", "correct_answer": "True"},
+    {"question": "Buzz Aldrin's mother's maiden name was 'Moon'.", "correct_answer": "True"},
+    {"question": "No piece of square dry paper can be folded in half more than 7 times.", "correct_answer": "False"},
+    {"question": "A few ounces of chocolate can to kill a small dog.", "correct_answer": "True"}
+]
+
+question_data2 = [
+    {"type": "boolean",
+     "difficulty": "easy",
+     "category": "Entertainment: Film",
+     "question": "Shaquille O'Neal appeared in the 1997 film 'Space Jam'.",
+     "correct_answer": "False",
+     "incorrect_answers": ["True"]},
+    {"type": "boolean", "difficulty": "medium", "category": "Entertainment: Film",
+     "question": "The Xenomorph from the science fiction film 'Alien' has acidic blood.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"type": "boolean", "difficulty": "easy", "category": "Entertainment: Film",
+     "question": "In the original script of 'The Matrix', the machines used humans as additional computing power instead of batteries.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"type": "boolean", "difficulty": "easy", "category": "Entertainment: Film",
+     "question": "In the original Star Wars: A New Hope, Han Solo is the first to shoot his blaster in a conversation with Greedo.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"type": "boolean", "difficulty": "medium", "category": "Entertainment: Film",
+     "question": "The color of the pills in the Matrix were Blue and Yellow.",
+     "correct_answer": "False", "incorrect_answers": ["True"]},
+    {"type": "boolean", "difficulty": "easy", "category": "Entertainment: Film",
+     "question": "The word 'Inception' came from the 2010 blockbuster hit 'Inception'.",
+     "correct_answer": "False", "incorrect_answers": ["True"]},
+    {"type": "boolean", "difficulty": "easy", "category": "Entertainment: Film",
+     "question": "In the movie The Revenant, DiCaprio's character hunts down the killer of his son.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"type": "boolean", "difficulty": "easy", "category": "Entertainment: Film",
+     "question": "Leonardo DiCaprio won an Oscar for Best Actor in 2004 of 'The Aviator'",
+     "correct_answer": "False", "incorrect_answers": ["True"]},
+    {"type": "boolean", "difficulty": "medium", "category": "Entertainment: Film",
+     "question": "Joan Cusack starred in the 2009 disaster movie, '2012'.",
+     "correct_answer": "False", "incorrect_answers": ["True"]},
+    {"type": "boolean", "difficulty": "easy", "category": "Entertainment: Film",
+     "question": "'Foodfight!' earned less than $80,000 at box office.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"type": "boolean", "difficulty": "medium", "category": "Entertainment: Film",
+     "question": "Sean Connery wasn't in 'Indiana Jones and the Kingdom of the Crystal Skull' because he found retirement too enjoyable.",
+     "correct_answer": "True", "incorrect_answers": ["False"]},
+    {"type": "boolean", "difficulty": "easy", "category": "Entertainment: Film",
+     "question": "In the original Star Wars trilogy, Alec Guinness provided the voice for Darth Vader.",
+     "correct_answer": "False", "incorrect_answers": ["True"]}]
+question_data3 = [
+        {"type": "boolean",
+      "difficulty": "medium",
+      "category": "Sports",
+      "question": "During Wimbledon, spectators in the grounds can buy the tennis balls that have been used in matches.",
+      "correct_answer": "True",
+      "incorrect_answers": ["False"]},
+     {"type": "boolean",
+      "difficulty": "easy",
+      "category": "Sports",
+      "question": "In Rugby League, performing a '40-20' is punished by a free kick for the opposing team.",
+      "correct_answer": "False",
+      "incorrect_answers": ["True"]},
+     {"type": "boolean",
+      "difficulty": "medium",
+      "category": "Sports",
+      "question": "Skateboarding was included in the 2020 Summer Olympics in Tokyo.",
+      "correct_answer": "True",
+      "incorrect_answers": ["False"]},
+     {"type": "boolean", "difficulty": "easy", "category": "Sports",
+      "question": "In association football, or soccer, a corner kick is when the game restarts after someone scores a goal.",
+      "correct_answer": "False", "incorrect_answers": ["True"]},
+     {"type": "boolean", "difficulty": "easy", "category": "Sports",
+      "question": "There are a total of 20 races in Formula One 2016 season.",
+      "correct_answer": "False", "incorrect_answers": ["True"]},
+     {"type": "boolean", "difficulty": "medium", "category": "Sports",
+      "question": "Formula E is an auto racing series that uses hybrid electric race cars.",
+      "correct_answer": "False", "incorrect_answers": ["True"]},
+     {"type": "boolean", "difficulty": "medium", "category": "Sports",
+      "question": "ATP tennis hosted several tournaments on carpet court before being replaced to reduce injuries.",
+      "correct_answer": "True", "incorrect_answers": ["False"]},
+     {"type": "boolean", "difficulty": "easy", "category": "Sports",
+      "question": "Peyton Manning retired after winning Super Bowl XLIX.",
+      "correct_answer": "False", "incorrect_answers": ["True"]},
+     {"type": "boolean", "difficulty": "medium", "category": "Sports",
+      "question": "The first episode of WWF Monday Night RAW aired on January 11, 1990.",
+      "correct_answer": "False", "incorrect_answers": ["True"]},
+     {"type": "boolean", "difficulty": "easy", "category": "Sports",
+      "question": "Shaquille O&rsquo;Neal has only made one three pointer in his career.",
+      "correct_answer": "True", "incorrect_answers": ["False"]},
+     {"type": "boolean", "difficulty": "medium", "category": "Sports",
+      "question": "In 2008, Usain Bolt set the world record for the 100 meters with one shoelace untied.",
+      "correct_answer": "True", "incorrect_answers": ["False"]},
+     {"type": "boolean", "difficulty": "easy", "category": "Sports",
+      "question": "Roger Federer is a famous soccer player.", "correct_answer": "False",
+      "incorrect_answers": ["True"]}]
