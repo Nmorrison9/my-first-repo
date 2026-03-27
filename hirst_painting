@@ -1,0 +1,28 @@
+from turtle import Turtle, Screen
+import random
+color_list = [(212, 160, 77), (222, 231, 225), (50, 88, 131), (148, 82, 37), (130, 177, 205), (164, 55, 81), (228, 204, 107), (133, 32, 46), (174, 148, 33), (43, 57, 107), (129, 182, 137), (36, 44, 69), (199, 94, 85), (82, 118, 181), (71, 36, 30), (184, 145, 179), (75, 28, 46), (193, 104, 110), (73, 147, 166), (83, 147, 89), (43, 72, 79), (81, 73, 42), (160, 200, 220), (117, 38, 37), (216, 176, 186), (83, 133, 91), (175, 190, 214), (222, 177, 170), (176, 204, 178), (50, 70, 69), (49, 65, 63)]
+screen = Screen()
+screen.colormode(255)
+
+saint = Turtle()
+saint.penup()
+saint.hideturtle()
+# Move to bottom-left starting position
+saint.setheading(225)
+saint.forward(300)
+saint.setheading(0)
+
+# Save starting position
+start_x = saint.xcor()
+start_y = saint.ycor()
+
+def paint_sideways():
+    for _ in range(10):
+        saint.dot(20, random.choice(color_list))
+        saint.forward(50)
+
+for row in range(10):
+    paint_sideways()
+    saint.goto(start_x, start_y + (row + 1) * 50)
+
+screen.exitonclick()
