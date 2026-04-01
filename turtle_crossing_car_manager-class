@@ -1,0 +1,63 @@
+import random
+from turtle import Turtle
+
+LANES = [-240, -200, -160, -120, -80, -40, 40, 80, 120, 160, 200, 240]
+COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
+STARTING_MOVE_DISTANCE = 4
+MOVE_INCREMENT = 2
+
+
+class CarManager:
+    def __init__(self):
+        self.all_cars = []
+        self.base_speed = STARTING_MOVE_DISTANCE
+        self.spawn_chance = 4
+
+        # Each lane gets its own speed + direction
+        self.lane_speeds = {
+            lane: random.choice([-1, 1]) * random.randint(3, 8)
+            for lane in LANES
+        }
+
+    def new_car(self):
+        if random.randint(1, int(self.spawn_chance)) == 1:
+            lane = random.choice(LANES)
+            direction = self.lane_speeds[lane]
+
+            new_car = Turtle()
+            new_car.penup()
+            new_car.shape("square")
+            new_car.shapesize(1, random.randint(2, 3))
+            new_car.color(random.choice(COLORS))
+
+            # Spawn based on direction
+            if direction > 0:
+                new_car.goto(-300, lane)
+                new_car.setheading(0)  # → right
+            else:
+                new_car.goto(300, lane)
+                new_car.setheading(0)  # → left
+
+            self.all_cars.append(new_car)
+
+    def move(self):
+        for car in self.all_cars:
+            lane = min(LANES, key=lambda l: abs(l - car.ycor()))
+            speed = self.lane_speeds.get(lane, self.base_speed)
+            car.forward(speed)
+
+        self.all_cars = [
+            car for car in self.all_cars
+            if -340 < car.xcor() < 340
+        ]
+
+    def increase_speed(self):
+        for lane in self.lane_speeds:
+            if self.lane_speeds[lane] > 0:
+                self.lane_speeds[lane] += MOVE_INCREMENT
+            else:
+                self.lane_speeds[lane] -= MOVE_INCREMENT
+
+        # ✅ increase spawn rate
+        if self.spawn_chance > 1:
+            self.spawn_chance -= 0.2
