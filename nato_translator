@@ -2,11 +2,7 @@ importpandas
 
 nato_data = pandas.read_csv("nato_phonetic_alphabet.csv")
 
-nato_dict = {}
-for index, row in nato_data.iterrows():
-    letter = row["letter"]
-    code = row["code"]
-    nato_dict[letter] = code
+nato_dict = {row.letter:row.code for (index, row) in nato_data.iterrows()}
 
 keep_going = True
 while keep_going:
