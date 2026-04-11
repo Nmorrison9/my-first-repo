@@ -1,0 +1,103 @@
+import requests
+from datetime import datetime
+import smtplib
+import time
+
+# ---------------------------- CONFIG ------------------------------- #
+my_email = "nate_morrison@ymail.com"
+password = "ogdrdqhxknuicceg"
+
+MY_LAT = 41.434574
+MY_LNG = -80.661682
+FORMAT = 0
+TIMEZONE = "America/New_York"
+
+DEBUG = False  # 🔥 TURN OFF FOR REAL RUN
+
+
+# ---------------------------- ISS CHECK ------------------------------- #
+def is_overhead():
+    if DEBUG:
+        print("DEBUG: Skipping ISS API → returning True")
+        return True
+
+    response = requests.get(url="http://api.open-notify.org/iss-now.json")
+    response.raise_for_status()
+    data = response.json()
+
+    iss_latitude = float(data["iss_position"]["latitude"])
+    iss_longitude = float(data["iss_position"]["longitude"])
+
+    print(f"ISS Position: {iss_latitude}, {iss_longitude}")
+
+    if MY_LAT - 5 <= iss_latitude <= MY_LAT + 5 and MY_LNG - 5 <= iss_longitude <= MY_LNG + 5:
+        return True
+
+    return False
+
+
+# ---------------------------- NIGHT CHECK ------------------------------- #
+def is_night(now=None):
+    if DEBUG:
+        print("DEBUG: Skipping sunrise/sunset API → returning True")
+        return True
+
+    if now is None:
+        now = datetime.now()
+
+    parameters = {
+        "lat": MY_LAT,
+        "lng": MY_LNG,
+        "formatted": FORMAT,
+        "tzid": TIMEZONE,
+    }
+
+    response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
+    response.raise_for_status()
+    data = response.json()
+
+    sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
+    sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+
+    time_now = now.hour
+
+    print(f"Sunrise: {sunrise}, Sunset: {sunset}, Current Hour: {time_now}")
+
+    # Night logic
+    if time_now >= sunset or time_now <= sunrise:
+        return True
+
+    return False
+
+
+# ---------------------------- EMAIL ------------------------------- #
+def send_email():
+    print("Sending email...")
+
+    with smtplib.SMTP("smtp.mail.yahoo.com", 587) as connection:
+        connection.starttls()
+        connection.login(user=my_email, password=password)
+
+        message = f"From: {my_email}\nTo: {my_email}\nSubject: ISS IS ABOVE!!!\n\nLook Up!"
+
+        connection.sendmail(
+            from_addr=my_email,
+            to_addrs=my_email,
+            msg=message
+        )
+
+while True:
+    print("\nChecking conditions...")
+
+    # Optional: inject fake time for testing
+    fake_time = datetime(2025, 1, 1, 23, 0) if DEBUG else None
+
+    if is_overhead() and is_night(fake_time):
+        print("Conditions met ✅")
+        send_email()
+    else:
+        print("Conditions not met ❌")
+
+    time.sleep(60)
+
+
