@@ -1,0 +1,32 @@
+from question_model import Question
+from quiz_brain import QuizBrain
+import requests
+from ui import UserInterface
+
+parameters = {
+    "amount": 10,
+    "category": 15,
+    "type": "boolean"
+}
+
+response = requests.get(url="https://opentdb.com/api.php", params=parameters)
+response.raise_for_status()
+data = response.json()
+question_data = data["results"]
+
+
+
+current_question = 0
+question_bank = []
+
+for question in question_data:
+    question_text = (question_data[current_question]["question"])
+    question_answer = (question_data[current_question]["correct_answer"])
+    current_question += 1
+    new_question = Question(question_text, question_answer)
+    question_bank.append(new_question)
+
+
+quiz = QuizBrain(question_bank)
+
+quiz_ui = UserInterface(quiz)
