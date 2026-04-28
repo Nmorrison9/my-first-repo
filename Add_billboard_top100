@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-
+ 
 uri= "YOURURI"
 client_id = "YOURCLIENTID"
 client_secret = "YOURSECRET"
